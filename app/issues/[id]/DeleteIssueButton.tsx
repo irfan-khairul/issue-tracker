@@ -5,21 +5,20 @@ import { AlertDialog, Button, Flex } from "@radix-ui/themes"
 import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import delay from "delay"
 
 const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
   const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [isDeleting, setDeleting] = useState(false)
   const router = useRouter()
 
   const deleteIssue = async () => {
     try {
-      setLoading(true)
+      setDeleting(true)
       await axios.delete("/api/issues/" + issueId)
       router.push("/issues")
       router.refresh()
     } catch (error) {
-      setLoading(false)
+      setDeleting(false)
       setError(true)
     }
   }
@@ -28,9 +27,9 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="red">
-            <TrashIcon />
+          <Button disabled={isDeleting} color="red">
             Delete Issue
+            {isDeleting && <Spinner />}
           </Button>
         </AlertDialog.Trigger>
         <AlertDialog.Content>
@@ -41,14 +40,15 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
           </AlertDialog.Description>
           <Flex mt={"4"} gap={"3"}>
             <AlertDialog.Cancel>
-              <Button disabled={loading} color="gray" variant="soft">
+              <Button color="gray" variant="soft">
                 Cancel
               </Button>
             </AlertDialog.Cancel>
-            <Button disabled={loading} color="red" onClick={deleteIssue}>
-              Delete Issue
-              {loading && <Spinner />}
-            </Button>
+            <AlertDialog.Action>
+              <Button color="red" onClick={deleteIssue}>
+                Delete Issue
+              </Button>
+            </AlertDialog.Action>
           </Flex>
         </AlertDialog.Content>
       </AlertDialog.Root>
