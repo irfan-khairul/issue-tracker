@@ -1,29 +1,44 @@
 "use client"
 import { User } from "@prisma/client"
-import { Select } from "@radix-ui/themes"
+import { Button, Select } from "@radix-ui/themes"
+import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import React, { useEffect, useState } from "react"
+import { Skeleton } from "@/app/components"
 
 const AssigneeSelect = () => {
-  const [users, setUsers] = useState<User[]>([])
+  const {
+    data: users,
+    error,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => axios.get<User[]>("/api/users").then((res) => res.data),
+    staleTime: 60 * 1000,
+    retry: 1,
+  })
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const { data } = await axios.get<User[]>("/api/users")
-      setUsers(data)
-    }
+  if (error)
+    return (
+      <Select.Root>
+        <Select.Trigger
+          variant="classic"
+          onClick={() => refetch()}
+          title="Click to retry"
+          placeholder="Display failed. Retry?"
+        />
+      </Select.Root>
+    )
 
-    fetchUsers()
-  }, [])
+  if (isLoading) return <Skeleton height={"2rem"} />
 
   return (
     <Select.Root>
       <Select.Trigger placeholder="Assign to:" />
-
       <Select.Content>
         <Select.Group>
           <Select.Label>Suggestions</Select.Label>
-          {users.map((user) => (
+          {users?.map((user) => (
             <Select.Item key={user.id} value={user.id}>
               {user.name}
             </Select.Item>
