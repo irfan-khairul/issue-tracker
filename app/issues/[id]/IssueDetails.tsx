@@ -4,13 +4,24 @@ import { Heading, Flex, Card, Text } from "@radix-ui/themes"
 import React from "react"
 import ReactMarkdown from "react-markdown"
 
+const dateOption: any = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric",
+  hour12: true,
+}
+
 const IssueDetails = ({ issue }: { issue: Issue }) => {
   return (
     <>
       <Heading>{issue.title}</Heading>
-      <Flex className="space-x-3" my={"2"}>
+      <Flex className="space-x-3" my={"2"} align={"center"}>
         <IssueStatusBadge status={issue.status} />
-        <Text>{issue.createdAt.toDateString()}</Text>
+        <Text>{issue.createdAt.toLocaleDateString(undefined, dateOption)}</Text>
       </Flex>
       <Card className="prose max-w-full" mt={"4"}>
         <ReactMarkdown>{issue.description}</ReactMarkdown>
