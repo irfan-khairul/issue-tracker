@@ -5,16 +5,20 @@ import { MinusCircledIcon, PersonIcon } from "@radix-ui/react-icons"
 import { Select } from "@radix-ui/themes"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
+import { useRouter } from "next/navigation"
 import toast, { Toaster } from "react-hot-toast"
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const { data: users, error, isLoading, refetch } = useUsers()
+  const router = useRouter()
 
   const assignIssue = (userId: string) => {
     toast.promise(
-      axios.patch("/api/issues/" + issue.id, {
-        assignedToUserId: userId === "unassign" ? null : userId,
-      }),
+      axios
+        .patch("/api/issues/" + issue.id, {
+          assignedToUserId: userId === "unassign" ? null : userId,
+        })
+        .then(() => router.refresh()),
       {
         loading: "Loading",
         success: "Assignee changed",

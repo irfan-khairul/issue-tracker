@@ -10,6 +10,8 @@ import AssigneeSelect from "./AssigneeSelect"
 import { cache } from "react"
 import StatusSelect from "./StatusSelect"
 
+// Todo: Add assigned avatar
+
 interface Props {
   params: { id: string }
 }

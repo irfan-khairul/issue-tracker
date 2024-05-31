@@ -8,26 +8,24 @@ import {
 } from "@radix-ui/react-icons"
 import { Select } from "@radix-ui/themes"
 import axios from "axios"
+import { useRouter } from "next/navigation"
 import { ReactElement } from "react"
 import toast, { Toaster } from "react-hot-toast"
 
-const statuses: { label: string; value: Status; icon: ReactElement }[] = [
-  { label: "Open", value: "OPEN", icon: <ExclamationTriangleIcon /> },
-  { label: "Closed", value: "CLOSED", icon: <CheckCircledIcon /> },
-  {
-    label: "In progress",
-    value: "IN_PROGRESS",
-    icon: <QuestionMarkCircledIcon />,
-  },
-]
-
 const StatusSelect = ({ issue }: { issue: Issue }) => {
+  const router = useRouter()
+
   const handleChange = (status: Status) => {
-    toast.promise(axios.patch("/api/issues/" + issue.id, { status: status }), {
-      loading: "Loading",
-      success: "Status changed",
-      error: "Error when changing status",
-    })
+    toast.promise(
+      axios
+        .patch("/api/issues/" + issue.id, { status: status })
+        .then(() => router.refresh()),
+      {
+        loading: "Loading",
+        success: "Status changed",
+        error: "Error when changing status",
+      }
+    )
   }
 
   return (
@@ -49,5 +47,23 @@ const StatusSelect = ({ issue }: { issue: Issue }) => {
     </>
   )
 }
+
+const statuses: { label: string; value: Status; icon: ReactElement }[] = [
+  {
+    label: "Open",
+    value: "OPEN",
+    icon: <ExclamationTriangleIcon color="red" />,
+  },
+  {
+    label: "Closed",
+    value: "CLOSED",
+    icon: <CheckCircledIcon color="green" />,
+  },
+  {
+    label: "In progress",
+    value: "IN_PROGRESS",
+    icon: <QuestionMarkCircledIcon color="blue" />,
+  },
+]
 
 export default StatusSelect

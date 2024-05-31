@@ -5,7 +5,7 @@ import { Flex, Grid } from "@radix-ui/themes"
 import IssueChart from "./IssueChart"
 import { Metadata } from "next"
 
-// Additional: refactor IssueSummary and IssueChart props
+// Todo: refactor IssueSummary and IssueChart props
 
 export default async function Home() {
   const open = await prisma.issue.count({ where: { status: "OPEN" } })

@@ -1,14 +1,13 @@
 import Pagination from "@/app/components/Pagination"
 import prisma from "@/prisma/client"
 import { Status } from "@prisma/client"
-import IssueActions from "./IssueActions"
-import IssueTable, { IssueQuery } from "./IssueTable"
-import { columnNames } from "./IssueTable"
-import { Button, Flex, Text } from "@radix-ui/themes"
+import { Flex } from "@radix-ui/themes"
 import { Metadata } from "next"
-import Link from "next/link"
+import IssueActions from "./IssueActions"
+import IssueTable, { columnNames, IssueQuery } from "./IssueTable"
 
-// Additional: add logic of desc sort order in 'issues'
+// Todo: add logic of desc sort order in 'issues'
+// Todo: add assigned avatar
 
 interface Props {
   searchParams: IssueQuery
