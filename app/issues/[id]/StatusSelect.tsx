@@ -12,18 +12,17 @@ const statuses: { label: string; value: Status; color?: string }[] = [
 ]
 
 const StatusSelect = ({ issue }: { issue: Issue }) => {
+  const handleChange = (status: Status) => {
+    toast.promise(axios.patch("/api/issues/" + issue.id, { status: status }), {
+      loading: "Loading",
+      success: "Status changed",
+      error: "Error when changing status",
+    })
+  }
+
   return (
     <>
-      <Select.Root
-        defaultValue={issue.status}
-        onValueChange={(status: Status) => {
-          console.log(status)
-          axios
-            .patch("/api/issues/" + issue.id, { status: status })
-            .then(() => toast.success("Status changed."))
-            .catch(() => toast.error("Error: status change failed."))
-        }}
-      >
+      <Select.Root defaultValue={issue.status} onValueChange={handleChange}>
         <Select.Trigger />
         <Select.Content>
           <Select.Group>

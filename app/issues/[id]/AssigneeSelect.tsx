@@ -9,6 +9,19 @@ import toast, { Toaster } from "react-hot-toast"
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const { data: users, error, isLoading, refetch } = useUsers()
 
+  const assignIssue = (userId: string) => {
+    toast.promise(
+      axios.patch("/api/issues/" + issue.id, {
+        assignedToUserId: userId === "unassign" ? null : userId,
+      }),
+      {
+        loading: "Loading",
+        success: "Assignee changed",
+        error: "Error when assigning",
+      }
+    )
+  }
+
   if (error)
     return (
       <Select.Root>
@@ -21,17 +34,6 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     )
 
   if (isLoading) return <Skeleton height={"2rem"} />
-
-  const assignIssue = (userId: string) => {
-    axios
-      .patch("/api/issues/" + issue.id, {
-        assignedToUserId: userId === "unassign" ? null : userId,
-      })
-      .then(() => toast.success("Changes saved."))
-      .catch(() => {
-        toast.error("Changes could not be saved.")
-      })
-  }
 
   return (
     <>
