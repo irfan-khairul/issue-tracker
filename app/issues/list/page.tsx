@@ -4,8 +4,9 @@ import { Status } from "@prisma/client"
 import IssueActions from "./IssueActions"
 import IssueTable, { IssueQuery } from "./IssueTable"
 import { columnNames } from "./IssueTable"
-import { Flex } from "@radix-ui/themes"
+import { Button, Flex, Text } from "@radix-ui/themes"
 import { Metadata } from "next"
+import Link from "next/link"
 
 // Additional: add logic of desc sort order in 'issues'
 
@@ -38,7 +39,9 @@ const IssuesPage = async ({ searchParams }: Props) => {
   return (
     <Flex direction={"column"} gap={"3"}>
       <IssueActions />
-      <IssueTable searchParams={searchParams} issues={issues} />
+      {issueCount !== 0 && (
+        <IssueTable searchParams={searchParams} issues={issues} />
+      )}
       <Pagination
         itemCount={issueCount}
         pageSize={pageSize}
