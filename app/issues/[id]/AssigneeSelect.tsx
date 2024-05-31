@@ -1,6 +1,7 @@
 "use client"
-import { Skeleton } from "@/app/components"
+import { IconWithText, Skeleton } from "@/app/components"
 import { Issue, User } from "@prisma/client"
+import { MinusCircledIcon, PersonIcon } from "@radix-ui/react-icons"
 import { Select } from "@radix-ui/themes"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
@@ -42,10 +43,16 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
         onValueChange={assignIssue}
       >
         <Select.Trigger />
-        <Select.Content>
+        <Select.Content position="popper">
           <Select.Group>
-            <Select.Label>Suggestions</Select.Label>
-            <Select.Item value="unassign">Unassigned</Select.Item>
+            <Select.Item value="unassign">
+              <IconWithText text="Unassigned" icon={<MinusCircledIcon />} />
+            </Select.Item>
+          </Select.Group>
+          <Select.Group>
+            <Select.Label>
+              <IconWithText text="Assignee" icon={<PersonIcon />} />
+            </Select.Label>
             {users?.map((user) => (
               <Select.Item key={user.id} value={user.id}>
                 {user.name}

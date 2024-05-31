@@ -1,14 +1,24 @@
 "use client"
+import { IconWithText } from "@/app/components/"
+import { Issue, Status } from "@prisma/client"
+import {
+  CheckCircledIcon,
+  ExclamationTriangleIcon,
+  QuestionMarkCircledIcon,
+} from "@radix-ui/react-icons"
 import { Select } from "@radix-ui/themes"
-import React from "react"
-import toast, { Toaster } from "react-hot-toast"
-import { Status, Issue } from "@prisma/client"
 import axios from "axios"
+import { ReactElement } from "react"
+import toast, { Toaster } from "react-hot-toast"
 
-const statuses: { label: string; value: Status; color?: string }[] = [
-  { label: "Open", value: "OPEN" },
-  { label: "Closed", value: "CLOSED" },
-  { label: "In progress", value: "IN_PROGRESS" },
+const statuses: { label: string; value: Status; icon: ReactElement }[] = [
+  { label: "Open", value: "OPEN", icon: <ExclamationTriangleIcon /> },
+  { label: "Closed", value: "CLOSED", icon: <CheckCircledIcon /> },
+  {
+    label: "In progress",
+    value: "IN_PROGRESS",
+    icon: <QuestionMarkCircledIcon />,
+  },
 ]
 
 const StatusSelect = ({ issue }: { issue: Issue }) => {
@@ -24,11 +34,12 @@ const StatusSelect = ({ issue }: { issue: Issue }) => {
     <>
       <Select.Root defaultValue={issue.status} onValueChange={handleChange}>
         <Select.Trigger />
-        <Select.Content>
+        <Select.Content position="popper">
           <Select.Group>
+            <Select.Label>Issue status</Select.Label>
             {statuses?.map((status) => (
               <Select.Item key={status.value} value={status.value}>
-                {status.label}
+                <IconWithText text={status.label} icon={status.icon} />
               </Select.Item>
             ))}
           </Select.Group>
