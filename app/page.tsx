@@ -5,16 +5,14 @@ import { Flex, Grid } from "@radix-ui/themes"
 import IssueChart from "./IssueChart"
 import { Metadata } from "next"
 
-// Todo: refactor IssueSummary and IssueChart props
-
 export default async function Home() {
-  const { open, inProgress, closed } = await fetchStatusValues()
+  const statusValues = await fetchStatusValues()
 
   return (
     <Grid columns={{ initial: "1", md: "2" }} gap={"5"}>
       <Flex direction={"column"} gap={"5"}>
-        <IssueSummary open={open} inProgress={inProgress} closed={closed} />
-        <IssueChart open={open} inProgress={inProgress} closed={closed} />
+        <IssueSummary statusValues={statusValues} />
+        <IssueChart statusValues={statusValues} />
       </Flex>
       <LatestIssues />
     </Grid>

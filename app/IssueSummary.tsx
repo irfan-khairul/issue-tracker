@@ -4,12 +4,12 @@ import { Status } from "@prisma/client"
 import Link from "next/link"
 
 interface Props {
-  open: number
-  inProgress: number
-  closed: number
+  statusValues: { open: number; inProgress: number; closed: number }
 }
 
-const IssueSummary = ({ open, inProgress, closed }: Props) => {
+const IssueSummary = ({
+  statusValues: { open, inProgress, closed },
+}: Props) => {
   const containers: { label: string; value: number; status: Status }[] = [
     { label: "Open Issues", value: open, status: "OPEN" },
     { label: "In Progress", value: inProgress, status: "IN_PROGRESS" },
