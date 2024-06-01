@@ -2,13 +2,10 @@
 import { Card } from "@radix-ui/themes"
 import React from "react"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { StatusValue } from "./page"
 
 interface Props {
-  statusValues: {
-    open: number
-    inProgress: number
-    closed: number
-  }
+  statusValues: StatusValue
 }
 
 const IssueChart = ({ statusValues: { open, inProgress, closed } }: Props) => {

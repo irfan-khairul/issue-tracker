@@ -2,9 +2,10 @@ import { Card, Flex, Heading, Text } from "@radix-ui/themes"
 import React from "react"
 import { Status } from "@prisma/client"
 import Link from "next/link"
+import { StatusValue } from "./page"
 
 interface Props {
-  statusValues: { open: number; inProgress: number; closed: number }
+  statusValues: StatusValue
 }
 
 const IssueSummary = ({

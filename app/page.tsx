@@ -5,6 +5,12 @@ import { Flex, Grid } from "@radix-ui/themes"
 import IssueChart from "./IssueChart"
 import { Metadata } from "next"
 
+export type StatusValue = {
+  open: number
+  inProgress: number
+  closed: number
+}
+
 export default async function Home() {
   const statusValues = await fetchStatusValues()
 

@@ -4,7 +4,7 @@ import { ArrowUpIcon } from "@radix-ui/react-icons"
 import { Table } from "@radix-ui/themes"
 import NextLink from "next/link"
 
-export interface IssueQuery {
+export type IssueQuery = {
   status: Status
   orderBy: keyof Issue
   page: string
