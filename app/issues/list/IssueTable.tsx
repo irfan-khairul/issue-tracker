@@ -1,7 +1,7 @@
 import { IssueStatusBadge, Link } from "@/app/components"
-import { Issue, Status } from "@prisma/client"
+import { Issue, Status, User } from "@prisma/client"
 import { ArrowUpIcon } from "@radix-ui/react-icons"
-import { Table } from "@radix-ui/themes"
+import { Avatar, Flex, Table, Text } from "@radix-ui/themes"
 import NextLink from "next/link"
 
 export type IssueQuery = {
@@ -13,9 +13,10 @@ export type IssueQuery = {
 interface Props {
   searchParams: IssueQuery
   issues: Issue[]
+  users: User[]
 }
 
-const IssueTable = ({ searchParams, issues }: Props) => {
+const IssueTable = ({ searchParams, issues, users }: Props) => {
   return (
     <Table.Root variant="surface">
       <Table.Header>
@@ -55,7 +56,9 @@ const IssueTable = ({ searchParams, issues }: Props) => {
               {issue.createdAt.toDateString()}
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
-              (assignee here)
+              {users.map(
+                (user) => user.id === issue.assignedToUserId && user.name
+              )}
             </Table.Cell>
           </Table.Row>
         ))}

@@ -16,10 +16,6 @@ interface Props {
   params: { id: string }
 }
 
-const fetchUser = cache((issueId: number) =>
-  prisma.issue.findUnique({ where: { id: issueId } })
-)
-
 const IssueDetailPage = async ({ params }: Props) => {
   const session = await getServerSession(authOptions)
 
@@ -47,6 +43,10 @@ const IssueDetailPage = async ({ params }: Props) => {
 }
 
 export default IssueDetailPage
+
+const fetchUser = cache((issueId: number) =>
+  prisma.issue.findUnique({ where: { id: issueId } })
+)
 
 export async function generateMetadata({ params }: Props) {
   const issue = await fetchUser(parseInt(params.id))

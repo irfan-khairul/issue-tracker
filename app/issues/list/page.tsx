@@ -5,10 +5,11 @@ import { Flex } from "@radix-ui/themes"
 import { Metadata } from "next"
 import IssueActions from "./IssueActions"
 import IssueTable, { columnNames, IssueQuery } from "./IssueTable"
-import axios from "axios"
 
-// Todo: add logic of desc sort order in 'issues'
-// Todo: add assigned avatar
+// Fix:   IssueTable sorting is not properly sorted
+// Todo:  add logic of desc sort order in 'issues'
+// Todo:  ✅ add assigned avatar,
+//        ❓ prisma.user fetching could be optimized
 
 interface Props {
   searchParams: IssueQuery
@@ -27,6 +28,8 @@ const IssuesPage = async ({ searchParams }: Props) => {
   const page = parseInt(searchParams.page) || 1
   const pageSize = 10
 
+  const users = await prisma.user.findMany()
+
   const issues = await prisma.issue.findMany({
     where: { status: status },
     orderBy: orderBy,
@@ -40,7 +43,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
     <Flex direction={"column"} gap={"3"}>
       <IssueActions />
       {issueCount !== 0 && (
-        <IssueTable searchParams={searchParams} issues={issues} />
+        <IssueTable searchParams={searchParams} issues={issues} users={users} />
       )}
       <Pagination
         itemCount={issueCount}
@@ -50,8 +53,6 @@ const IssuesPage = async ({ searchParams }: Props) => {
     </Flex>
   )
 }
-
-// export const revalidate = 0
 
 export default IssuesPage
 
