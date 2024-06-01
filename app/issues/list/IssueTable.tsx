@@ -54,6 +54,9 @@ const IssueTable = ({ searchParams, issues }: Props) => {
             <Table.Cell className="hidden md:table-cell">
               {issue.createdAt.toDateString()}
             </Table.Cell>
+            <Table.Cell className="hidden md:table-cell">
+              (assignee here)
+            </Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>
