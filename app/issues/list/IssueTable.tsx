@@ -69,6 +69,11 @@ const columns: { label: string; value: keyof Issue; className?: string }[] = [
     value: "createdAt",
     className: "hidden md:table-cell",
   },
+  {
+    label: "Assigned to",
+    value: "assignedToUserId",
+    className: "hidden md:table-cell",
+  },
 ]
 
 export const columnNames = columns.map((column) => column.value)

@@ -1,10 +1,11 @@
 import Pagination from "@/app/components/Pagination"
 import prisma from "@/prisma/client"
-import { Status } from "@prisma/client"
+import { Status, User } from "@prisma/client"
 import { Flex } from "@radix-ui/themes"
 import { Metadata } from "next"
 import IssueActions from "./IssueActions"
 import IssueTable, { columnNames, IssueQuery } from "./IssueTable"
+import axios from "axios"
 
 // Todo: add logic of desc sort order in 'issues'
 // Todo: add assigned avatar
@@ -51,9 +52,10 @@ const IssuesPage = async ({ searchParams }: Props) => {
 }
 
 // export const revalidate = 0
-export const dynamic = "force-dynamic"
 
 export default IssuesPage
+
+export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = {
   title: "Issue Tracker - Issue List",
