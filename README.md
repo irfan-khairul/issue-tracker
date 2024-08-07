@@ -25,7 +25,6 @@ These instructions will help you set up and run the project on your local machin
 
    ```bash
    git clone https://github.com/irfan-khairul/issue-tracker.git
-   cd issue-tracker
 
 2. **Navigate to project directory**
 
