@@ -30,7 +30,7 @@ These instructions will help you set up and run the project on your local machin
 2. **Navigate to project directory**
 
    ```bash
-   cd game-hub
+   cd issue-tracker
    
 3. **Install Dependencies**
 Make sure you have Node.js installed. Then run:
