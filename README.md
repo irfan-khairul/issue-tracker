@@ -66,5 +66,5 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 # Acknowledgments
-- This project was developed following an online course by [Course Name/Instructor].
+- This project was developed following an online course.
 - Thanks to the open-source community for providing helpful resources and libraries.
