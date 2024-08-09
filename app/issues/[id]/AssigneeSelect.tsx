@@ -20,9 +20,9 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
         })
         .then(() => router.refresh()),
       {
-        loading: "Loading",
+        loading: "Assigning...",
         success: "Assignee changed",
-        error: "Error when assigning",
+        error: "Error. Unable to assign",
       }
     )
   }
